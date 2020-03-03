@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">AfyaSmart</string>
+    <string name="home_activity_text">Home Activity</string>
+    <string name="email_address_hint">Email Address</string>
+    <string name="password_text">Password</string>
+    <string name="login_text">Login</string>
+    <string name="register_text">Register</string>
+    <string name="sign_in_text">Sign In</string>
+    <string name="register_prompt">Don\'t have an accout yet?</string>
+    <string name="sign_up_text">Sign Up</string>
+    <string name="doctors_avatar_text">Doctors Avatar</string>
+    <string name="doctors_text">Doctors</string>
+    <string name="diseases_avatar_text">Diseases Avatar</string>
+    <string name="diseases_text">Diseases</string>
+    <string name="messages_avatar_text">Messages Avatar</string>
+    <string name="messages_text">Messages</string>
+    <string name="blog_text">Blog</string>
+    <string name="blog_avatar_text">Blog Avatar</string>
+    <string name="logout_text">Logout</string>
+</resources>
