@@ -1,12 +1,11 @@
 <resources>
     <string name="app_name">AfyaSmart</string>
     <string name="home_activity_text">Home Activity</string>
-    <string name="email_address_hint">Email Address</string>
     <string name="password_text">Password</string>
     <string name="login_text">Login</string>
     <string name="register_text">Register</string>
     <string name="sign_in_text">Sign In</string>
-    <string name="register_prompt">Don\'t have an accout yet?</string>
+    <string name="register_prompt">Don\'t have an account yet?</string>
     <string name="sign_up_text">Sign Up</string>
     <string name="doctors_avatar_text">Doctors Avatar</string>
     <string name="doctors_text">Doctors</string>
@@ -17,4 +16,19 @@
     <string name="blog_text">Blog</string>
     <string name="blog_avatar_text">Blog Avatar</string>
     <string name="logout_text">Logout</string>
+    <string name="home_text">Home</string>
+    <string name="user_avatar_text">User Avatar</string>
+    <string name="email_address_hint">Email Address …</string>
+    <string name="name_hint">Name…</string>
+    <string name="description_hint">Description …</string>
+    <string name="add_disease_text">Add Disease</string>
+    <string name="post_image_text">Post Image</string>
+    <string name="title_hint">Title…</string>
+    <string name="body_hint">Body…</string>
+    <string name="add_post_text">Add Post</string>
+    <string name="request_permission_text">Request Permission</string>
+    <string name="permission_content">The application requires some permissions to be able to perform the expected functionality. If you don\'t accept the permission the application might not work as promised, the application needs access to your gallery, internet and others as you will be requested from the dialogs grant the access please</string>
+    <string name="grant_permission_btn_text">Grant Permission</string>
+    <string name="favourite_image_text">Favourite Image</string>
+    <string name="zero">0</string>
 </resources>
