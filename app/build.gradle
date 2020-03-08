@@ -41,6 +41,7 @@ dependencies {
     //Fire-base dependencies
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.firebase:firebase-firestore:21.4.1'
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
 
     //Navigation dependencies
     def nav_version = "2.3.0-alpha03"

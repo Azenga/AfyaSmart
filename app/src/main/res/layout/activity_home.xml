@@ -9,37 +9,10 @@
     tools:context=".HomeActivity"
     tools:openDrawer="start">
 
-    <LinearLayout
+    <include
+        layout="@layout/content_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?colorPrimary"
-                app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light" />
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <fragment
-            android:id="@+id/fragment"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:defaultNavHost="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-            app:navGraph="@navigation/nav_graph" />
-
-    </LinearLayout>
+        android:layout_height="match_parent" />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
@@ -48,6 +21,6 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/header"
-        app:menu="@menu/sidebar" />
+        app:menu="@menu/nav_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

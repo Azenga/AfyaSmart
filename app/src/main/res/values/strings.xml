@@ -31,4 +31,9 @@
     <string name="grant_permission_btn_text">Grant Permission</string>
     <string name="favourite_image_text">Favourite Image</string>
     <string name="zero">0</string>
+    <string name="profile_text">Profile</string>
+    <string name="accounts_text">Accounts</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
