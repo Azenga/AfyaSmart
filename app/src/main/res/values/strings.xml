@@ -36,4 +36,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="account_circle_drawable_text">Account Circle Drawable</string>
+    <string name="my_contact_text">+254700016349</string>
+    <string name="user_roles_avatar_text">User Roles Avatar</string>
+    <string name="patient_text">Patient</string>
+    <string name="edit_profile_text">Edit Profile</string>
+    <string name="something_about_you_hint">Something about you…</string>
+    <string name="update_profile_text">Update Profile</string>
 </resources>

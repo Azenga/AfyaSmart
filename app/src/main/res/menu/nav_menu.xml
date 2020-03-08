@@ -34,11 +34,9 @@
         android:title="@string/accounts_text">
         <menu>
             <item
+                android:id="@+id/profileFragment"
                 android:icon="@drawable/ic_account_circle_black_48dp"
                 android:title="@string/profile_text" />
-            <item
-                android:icon="@drawable/ic_account_circle_black_48dp"
-                android:title="@string/logout_text" />
         </menu>
     </item>
 </menu>
