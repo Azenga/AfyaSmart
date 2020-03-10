@@ -111,7 +111,6 @@ public class HomeActivity extends AppCompatActivity {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-
         if (currentUser == null) {
             sendToLogin();
             return;
@@ -123,9 +122,7 @@ public class HomeActivity extends AppCompatActivity {
     private void sendToLogin() {
 
         Intent intent = new Intent(this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        finish();
+        startActivity(intent);
     }
 
     private void updateUI(FirebaseUser currentUser) {

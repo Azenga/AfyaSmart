@@ -96,9 +96,10 @@ public class EditProfileFragment extends Fragment {
 
             if (userAvatarUri == null) {
 
-                String currentUid = mAuth.getUid();
+                assert mAuth.getCurrentUser() != null;
+
+                String currentUid = mAuth.getCurrentUser().getUid();
                 //Upload the image
-                assert currentUid != null;
                 StorageReference userAvatarRef = mFiles.getReference("avatar/" + currentUid);
                 userAvatarRef.putFile(userAvatarUri).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -125,7 +126,12 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void updateUserProfile(Profile profile) {
-        mDatabase.collection("profiles").add(profile).addOnCompleteListener(task -> {
+
+        assert mAuth.getCurrentUser() != null;
+
+        String currentUid = mAuth.getCurrentUser().getUid();
+
+        mDatabase.collection("profiles").document(currentUid).set(profile).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 assert getActivity() != null;
                 Toast.makeText(getActivity(), "User profile successfully updated", Toast.LENGTH_SHORT).show();
