@@ -1,6 +1,7 @@
 package com.mysasse.afyasmart;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -22,7 +23,9 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.mysasse.afyasmart.ui.AdminActivity;
 import com.mysasse.afyasmart.ui.LoginActivity;
+import com.mysasse.afyasmart.ui.RequestPermissionActivity;
 
 public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
@@ -35,15 +38,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        //Check whether the necessary permissions are available before proceeding
-        if (
-                (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-                        || (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-        ) {
-            startActivity(new Intent(this, LoginActivity.class));
-            return;
-        }
 
         //Initialize fire-base instances
         mAuth = FirebaseAuth.getInstance();
@@ -81,7 +75,7 @@ public class HomeActivity extends AppCompatActivity {
 
         if (item.getItemId() == R.id.logout) {
             AlertDialog.Builder logoutDialog = new AlertDialog.Builder(this)
-                    .setIcon(R.drawable.ic_account_circle_black_48dp)
+                    .setIcon(ContextCompat.getDrawable(this, R.drawable.ic_account_circle_black_48dp))
                     .setMessage("Are sure you want to logout ?")
                     .setPositiveButton("Sure", (dialog, which) -> {
                         mAuth.signOut();
@@ -92,6 +86,12 @@ public class HomeActivity extends AppCompatActivity {
                     }));
 
             logoutDialog.show();
+
+            return true;
+        }
+
+        if (item.getItemId() == R.id.admin_menu_item) {
+            startActivity(new Intent(this, AdminActivity.class));
             return true;
         }
 
@@ -120,7 +120,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void sendToLogin() {
-
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }

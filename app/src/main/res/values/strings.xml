@@ -43,4 +43,9 @@
     <string name="edit_profile_text">Edit Profile</string>
     <string name="something_about_you_hint">Something about you…</string>
     <string name="update_profile_text">Update Profile</string>
+    <string name="all_users_text">All Users</string>
+    <string name="front_room_text">Front Room</string>
+    <string name="dashboard_text">Dashboard</string>
+    <string name="notifications_text">Notifications</string>
+    <string name="role_text">Role...</string>
 </resources>

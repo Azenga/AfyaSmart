@@ -2,7 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/admin_menu_item"
+        android:icon="@drawable/ic_palette"
+        android:orderInCategory="100"
+        android:title="@string/dashboard_text"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/logout"
         android:orderInCategory="101"
         android:title="@string/logout_text" />
+
 </menu>
