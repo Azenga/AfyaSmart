@@ -16,8 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -46,6 +48,9 @@ public class EditProfileFragment extends Fragment {
     private CircleImageView userAvatarCiv;
     private TextInputEditText nameTxt;
     private TextInputEditText phoneTxt;
+    private ProgressBar updateProfileProgressBar;
+    private Profile mProfile = null;
+    private TextInputEditText bioTxt;
 
     public EditProfileFragment() {
         // Required empty public constructor
@@ -56,6 +61,14 @@ public class EditProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_edit_profile, container, false);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        assert getArguments() != null;
+        mProfile = EditProfileFragmentArgs.fromBundle(getArguments()).getProfile();
     }
 
     @Override
@@ -70,9 +83,14 @@ public class EditProfileFragment extends Fragment {
         //Register necessary views
         userAvatarCiv = view.findViewById(R.id.user_avatar_civ);
 
+        updateProfileProgressBar = view.findViewById(R.id.update_profile_progress_bar);
+
         nameTxt = view.findViewById(R.id.name_txt);
         phoneTxt = view.findViewById(R.id.phone_txt);
-        TextInputEditText bioTxt = view.findViewById(R.id.bio_txt);
+        bioTxt = view.findViewById(R.id.bio_txt);
+
+        //Update with existing details
+        updateUI();
 
         Button updateProfileButton = view.findViewById(R.id.update_profile_button);
 
@@ -95,34 +113,54 @@ public class EditProfileFragment extends Fragment {
             Profile profile = new Profile(name, phone, "Patient", bio);
 
             if (userAvatarUri == null) {
-
-                assert mAuth.getCurrentUser() != null;
-
-                String currentUid = mAuth.getCurrentUser().getUid();
-                //Upload the image
-                StorageReference userAvatarRef = mFiles.getReference("avatar/" + currentUid);
-                userAvatarRef.putFile(userAvatarUri).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        //Get the download url for the image from the storage reference which is a network task
-                        userAvatarRef.getDownloadUrl().addOnCompleteListener(downLoadUrlTask -> {
-                            if (task.isSuccessful()) {
-                                profile.setAvatar(downLoadUrlTask.toString());
-                                updateUserProfile(profile);
-                            } else {
-                                Log.e(TAG, "onViewCreated: Error While downloading the image url: ", downLoadUrlTask.getException());
-                                Toast.makeText(getActivity(), "Error while downloading the image url contact admin", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    } else {
-                        Log.e(TAG, "onViewCreated: Error While uploading image: ", task.getException());
-                        Toast.makeText(getActivity(), "Error while uploading the image try again later", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } else {
-                updateUserProfile(profile);
+                Toast.makeText(getActivity(), "Select a profile picture before updating", Toast.LENGTH_SHORT).show();
+                return;
             }
 
+            assert mAuth.getCurrentUser() != null;
+
+            String currentUid = mAuth.getCurrentUser().getUid();
+            //Upload the image
+
+            updateProfileProgressBar.setVisibility(View.VISIBLE);
+            StorageReference userAvatarRef = mFiles.getReference("avatar/" + currentUid);
+            userAvatarRef.putFile(userAvatarUri).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    //Get the download url for the image from the storage reference which is a network task
+                    userAvatarRef.getDownloadUrl().addOnCompleteListener(downLoadUrlTask -> {
+                        if (task.isSuccessful()) {
+                            assert downLoadUrlTask.getResult() != null;
+                            profile.setAvatar(downLoadUrlTask.getResult().toString());
+                            updateUserProfile(profile);
+                        } else {
+                            Log.e(TAG, "onViewCreated: Error While downloading the image url: ", downLoadUrlTask.getException());
+                            Toast.makeText(getActivity(), "Error while downloading the image url contact admin", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Log.e(TAG, "onViewCreated: Error While uploading image: ", task.getException());
+                    Toast.makeText(getActivity(), "Error while uploading the image try again later", Toast.LENGTH_SHORT).show();
+                }
+            });
+
         });
+    }
+
+    private void updateUI() {
+
+        nameTxt.setText(mProfile.getName());
+        if (!mProfile.getPhone().isEmpty())
+            phoneTxt.setText(mProfile.getPhone());
+
+        if (!mProfile.getBio().isEmpty())
+            bioTxt.setText(mProfile.getBio());
+
+        Glide.with(this)
+                .load(mProfile.getAvatar())
+                .centerCrop()
+                .placeholder(R.drawable.ic_account_circle)
+                .into(userAvatarCiv);
+
     }
 
     private void updateUserProfile(Profile profile) {
@@ -132,6 +170,8 @@ public class EditProfileFragment extends Fragment {
         String currentUid = mAuth.getCurrentUser().getUid();
 
         mDatabase.collection("profiles").document(currentUid).set(profile).addOnCompleteListener(task -> {
+
+            updateProfileProgressBar.setVisibility(View.GONE);
             if (task.isSuccessful()) {
                 assert getActivity() != null;
                 Toast.makeText(getActivity(), "User profile successfully updated", Toast.LENGTH_SHORT).show();

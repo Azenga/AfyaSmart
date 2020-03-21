@@ -32,6 +32,7 @@ public class ProfileRepository {
                         listener.showError(e);
                         return;
                     }
+
                     assert documentSnapshot != null;
                     Profile profile = documentSnapshot.toObject(Profile.class);
                     Log.d(TAG, "getAuthenticatedUserProfile: documentSnapshot: " + documentSnapshot);

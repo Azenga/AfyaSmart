@@ -12,9 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import com.bumptech.glide.Glide;
 import com.mysasse.afyasmart.R;
+import com.mysasse.afyasmart.data.models.Profile;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -29,6 +32,8 @@ public class ProfileFragment extends Fragment {
     private TextView userPhoneTv;
     private TextView userRoleTv;
     private TextView userBioTv;
+
+    private Profile mProfile;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -55,7 +60,12 @@ public class ProfileFragment extends Fragment {
 
         Button editAccountBtn = view.findViewById(R.id.edit_account_btn);
 
-        editAccountBtn.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.editProfileFragment));
+        editAccountBtn.setOnClickListener(v -> {
+            ProfileFragmentDirections.ActionProfileFragmentToEditProfileFragment actionProfileFragmentToEditProfileFragment = ProfileFragmentDirections.actionProfileFragmentToEditProfileFragment();
+            actionProfileFragmentToEditProfileFragment.setProfile(mProfile);
+
+            Navigation.findNavController(v).navigate(actionProfileFragmentToEditProfileFragment);
+        });
 
     }
 
@@ -66,6 +76,14 @@ public class ProfileFragment extends Fragment {
 
         profileViewModel.getProfile().observe(getViewLifecycleOwner(), profile -> {
             assert profile != null;
+
+            mProfile = profile;
+
+            Glide.with(this)
+                    .load(profile.getAvatar())
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_account_circle)
+                    .into(userAvatarCiv);
 
             userNameTv.setText(profile.getName());
             userPhoneTv.setText(profile.getPhone());

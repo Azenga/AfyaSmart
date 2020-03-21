@@ -2,7 +2,9 @@ package com.mysasse.afyasmart.data.models;
 
 import com.google.firebase.firestore.DocumentId;
 
-public class Profile {
+import java.io.Serializable;
+
+public class Profile implements Serializable {
 
     @DocumentId
     private String id;

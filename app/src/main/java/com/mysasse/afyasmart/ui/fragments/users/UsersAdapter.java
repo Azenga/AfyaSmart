@@ -17,9 +17,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHolder> {
 
+    private UserItemClicked mUserItemClicked;
     private List<Profile> profileList;
 
-    public UsersAdapter(List<Profile> profileList) {
+    public UsersAdapter(UserItemClicked userItemClicked, List<Profile> profileList) {
+        this.mUserItemClicked = userItemClicked;
         this.profileList = profileList;
     }
 
@@ -33,6 +35,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         holder.userNameTv.setText(profileList.get(position).getName());
         holder.userRoleTv.setText(profileList.get(position).getRole());
+
+        holder.mView.setOnClickListener(v -> mUserItemClicked.openMessages(profileList.get(position)));
     }
 
     @Override
@@ -40,17 +44,22 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
         return profileList.size();
     }
 
-    public static class UserViewHolder extends RecyclerView.ViewHolder {
+    static class UserViewHolder extends RecyclerView.ViewHolder {
+        View mView;
         CircleImageView userAvatarCiv;
         TextView userNameTv, userRoleTv;
 
-        public UserViewHolder(@NonNull View itemView) {
+        UserViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            mView = itemView;
             userAvatarCiv = itemView.findViewById(R.id.user_avatar_civ);
-
             userNameTv = itemView.findViewById(R.id.user_name_tv);
             userRoleTv = itemView.findViewById(R.id.user_role_tv);
         }
+    }
+
+    public interface UserItemClicked {
+        void openMessages(Profile profile);
     }
 }

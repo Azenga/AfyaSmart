@@ -61,9 +61,11 @@ public class RegisterActivity extends AppCompatActivity {
 
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
+                        registerProgressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
                             Profile profile = new Profile();
                             profile.setName(name);
+                            profile.setRole("Patient");
                             initProfile(profile);
                         } else {
                             Log.e(TAG, "onCreate: createUserWithEmailAndPassword: error: ", task.getException());

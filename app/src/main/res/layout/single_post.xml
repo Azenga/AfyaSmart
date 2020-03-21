@@ -28,7 +28,7 @@
     <ImageView
         android:id="@+id/post_image_view"
         android:layout_width="match_parent"
-        android:layout_height="256dp"
+        android:layout_height="200dp"
         android:layout_marginTop="8dp"
         android:contentDescription="@string/post_image_text"
         android:scaleType="centerCrop"

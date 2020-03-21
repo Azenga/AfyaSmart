@@ -21,7 +21,9 @@
             android:layout_width="0dp"
             android:layout_height="196dp"
             android:layout_columnWeight="1"
-            android:background="@drawable/card_background">
+            android:background="@drawable/card_background"
+            app:cardBackgroundColor="@color/colorGrayLight"
+            app:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -30,17 +32,18 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
                     android:contentDescription="@string/doctors_avatar_text"
-                    android:src="@drawable/ic_supervisor_account" />
+                    android:src="@mipmap/images" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/doctors_text"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textColor="?colorPrimary" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -50,7 +53,9 @@
             android:layout_height="196dp"
             android:layout_columnWeight="1"
             android:layout_marginStart="16dp"
-            android:background="@drawable/card_background">
+            android:background="@drawable/card_background"
+            app:cardBackgroundColor="@color/colorGrayLight"
+            app:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,17 +64,19 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
                     android:contentDescription="@string/diseases_avatar_text"
-                    android:src="@drawable/ic_warning" />
+                    android:src="@drawable/ic_warning_primary_96dp"
+                    android:textColor="?colorPrimary" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/diseases_text"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textColor="?colorPrimary" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -79,7 +86,9 @@
             android:layout_height="196dp"
             android:layout_columnWeight="1"
             android:layout_marginTop="16dp"
-            android:background="@drawable/card_background">
+            android:background="@drawable/card_background"
+            app:cardBackgroundColor="@color/colorGrayLight"
+            app:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,17 +97,18 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
                     android:contentDescription="@string/messages_avatar_text"
-                    android:src="@drawable/ic_chat_bubble" />
+                    android:src="@drawable/ic_chat_primary_96dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/messages_text"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textColor="?colorPrimary" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -109,7 +119,9 @@
             android:layout_columnWeight="1"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/card_background">
+            android:background="@drawable/card_background"
+            app:cardBackgroundColor="@color/colorGrayLight"
+            app:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -118,17 +130,18 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
                     android:contentDescription="@string/blog_avatar_text"
-                    android:src="@drawable/ic_forum" />
+                    android:src="@drawable/ic_forum_primary_96dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/blog_text"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textColor="?colorPrimary" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

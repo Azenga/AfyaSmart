@@ -1,13 +1,13 @@
 package com.mysasse.afyasmart;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -20,12 +20,16 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.mysasse.afyasmart.data.models.Profile;
 import com.mysasse.afyasmart.ui.AdminActivity;
 import com.mysasse.afyasmart.ui.LoginActivity;
-import com.mysasse.afyasmart.ui.RequestPermissionActivity;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
@@ -33,6 +37,10 @@ public class HomeActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore mDatabase;
+    private CircleImageView userAvatarCiv;
+    private TextView userNameTv;
+    private Profile mProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +49,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //Initialize fire-base instances
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseFirestore.getInstance();
 
         //Get toolbar and set it as the support action bar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -62,6 +71,12 @@ public class HomeActivity extends AppCompatActivity {
 
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        //Get and set the header layouts and the relevant views
+        View headerLayout = navigationView.getHeaderView(0);
+        userAvatarCiv = headerLayout.findViewById(R.id.user_avatar);
+        userNameTv = headerLayout.findViewById(R.id.user_name);
+
     }
 
     @Override
@@ -126,5 +141,35 @@ public class HomeActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser currentUser) {
         Log.d(TAG, "updateUI: Authenticated User UID :" + currentUser.getUid());
+
+        //Get and set the header details
+        mDatabase.collection("profiles").document(currentUser.getUid())
+                .addSnapshotListener((documentSnapshot, e) -> {
+
+                    if (e != null) {
+                        Log.e(TAG, "updateUI: error getting user profile", e);
+                        Toast.makeText(this, "Error getting usr profile", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    if (documentSnapshot != null) {
+                        mProfile = documentSnapshot.toObject(Profile.class);
+
+                        //Set the display name
+                        assert mProfile != null;
+
+                        if (!mProfile.getName().isEmpty())
+                            userNameTv.setText(mProfile.getName());
+
+                        if (!mProfile.getAvatar().isEmpty())
+                            Glide.with(this)
+                                    .load(mProfile.getAvatar())
+                                    .centerCrop()
+                                    .placeholder(R.drawable.ic_account_circle)
+                                    .into(userAvatarCiv);
+
+                    }
+
+                });
     }
 }

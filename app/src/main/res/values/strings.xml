@@ -47,5 +47,10 @@
     <string name="front_room_text">Front Room</string>
     <string name="dashboard_text">Dashboard</string>
     <string name="notifications_text">Notifications</string>
-    <string name="role_text">Role...</string>
+    <string name="role_text">Role…</string>
+    <string name="message_default">Your message should go here…</string>
+    <string name="messsage_hint">Messsage...</string>
+    <string name="send_icon_text">Send Icon</string>
+    <string name="vertical_more_text">Vertical More</string>
+    <string name="chat_room_text">Chat Room</string>
 </resources>

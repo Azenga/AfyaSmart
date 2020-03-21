@@ -3,12 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.diseases.admin.AllDiseasesFragment">
+    tools:context=".ui.fragments.messages.ChatRoomFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/all_diseases_recycler_view"
+    <include
+        layout="@layout/message_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/diseases_fragment" />
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

@@ -28,7 +28,14 @@
         android:id="@+id/messagesFragment"
         android:name="com.mysasse.afyasmart.ui.fragments.messages.MessagesFragment"
         android:label="@string/messages_text"
-        tools:layout="@layout/messages_fragment" />
+        tools:layout="@layout/messages_fragment">
+        <action
+            android:id="@+id/action_messagesFragment_to_allChatUsersFragment"
+            app:destination="@id/allChatUsersFragment" />
+        <action
+            android:id="@+id/action_messagesFragment_to_chatRoomFragment"
+            app:destination="@id/chatRoomFragment" />
+    </fragment>
     <fragment
         android:id="@+id/postsFragment"
         android:name="com.mysasse.afyasmart.ui.fragments.posts.PostFragment"
@@ -46,7 +53,7 @@
     <fragment
         android:id="@+id/addPostFragment"
         android:name="com.mysasse.afyasmart.ui.fragments.posts.AddPostFragment"
-        android:label="@string/add_disease_text"
+        android:label="@string/add_post_text"
         tools:layout="@layout/fragment_add_post" />
     <fragment
         android:id="@+id/profileFragment"
@@ -61,6 +68,30 @@
         android:id="@+id/editProfileFragment"
         android:name="com.mysasse.afyasmart.ui.fragments.profile.EditProfileFragment"
         android:label="@string/edit_profile_text"
-        tools:layout="@layout/fragment_edit_profile" />
+        tools:layout="@layout/fragment_edit_profile">
+        <argument
+            android:name="profile"
+            android:defaultValue="@null"
+            app:argType="com.mysasse.afyasmart.data.models.Profile"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/allChatUsersFragment"
+        android:name="com.mysasse.afyasmart.ui.fragments.messages.AllChatUsersFragment"
+        android:label="@string/all_users_text"
+        tools:layout="@layout/all_chat_users_fragment">
+        <action
+            android:id="@+id/action_allChatUsersFragment_to_chatRoomFragment"
+            app:destination="@id/chatRoomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatRoomFragment"
+        android:name="com.mysasse.afyasmart.ui.fragments.messages.ChatRoomFragment"
+        android:label="@string/chat_room_text"
+        tools:layout="@layout/chat_room_fragment">
+        <argument
+            android:name="receiver"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

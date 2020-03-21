@@ -22,8 +22,13 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.mysasse.afyasmart.R;
 import com.mysasse.afyasmart.data.models.Post;
+
+import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +41,7 @@ public class AddPostFragment extends Fragment {
 
     private FirebaseFirestore mDatabase;
     private FirebaseAuth mAuth;
+    private FirebaseStorage mStorage;
     private TextInputEditText titleTxt;
     private TextInputEditText bodyTxt;
     private Uri postImageUri;
@@ -58,6 +64,7 @@ public class AddPostFragment extends Fragment {
         //Initialize fire-base instances
         mDatabase = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+        mStorage = FirebaseStorage.getInstance();
 
         //Register views
         postImageView = view.findViewById(R.id.post_image_view);
@@ -94,10 +101,29 @@ public class AddPostFragment extends Fragment {
 
             addPostProgressBar.setVisibility(View.VISIBLE);
             if (postImageUri != null) {
-                post.setImage(postImageUri.toString());
+
+                //Upload the post image
+                StorageReference postImageRef = mStorage.getReference("posts").child(UUID.randomUUID().toString());
+
+                UploadTask postImageUploadTask = postImageRef.putFile(postImageUri);
+
+                postImageUploadTask.addOnSuccessListener(taskSnapshot -> postImageRef.getDownloadUrl().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Uri remotePostImageUri = task.getResult();
+                        post.setImage(remotePostImageUri.toString());
+
+                        uploadPost(post);
+
+                    }
+                })).addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "" + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "onViewCreated: ", e);
+                });
+
+            } else {
+                uploadPost(post);
             }
 
-            uploadPost(post);
 
         });
     }
