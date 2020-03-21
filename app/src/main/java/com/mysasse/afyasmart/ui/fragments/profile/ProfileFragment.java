@@ -2,6 +2,7 @@ package com.mysasse.afyasmart.ui.fragments.profile;
 
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,10 +86,15 @@ public class ProfileFragment extends Fragment {
                     .placeholder(R.drawable.ic_account_circle)
                     .into(userAvatarCiv);
 
+
             userNameTv.setText(profile.getName());
-            userPhoneTv.setText(profile.getPhone());
             userRoleTv.setText(profile.getRole());
-            userBioTv.setText(profile.getBio());
+
+            if (!TextUtils.isEmpty(profile.getPhone()))
+                userPhoneTv.setText(profile.getPhone());
+
+            if (!TextUtils.isEmpty(profile.getBio()))
+                userBioTv.setText(profile.getBio());
         });
     }
 }

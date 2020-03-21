@@ -149,10 +149,10 @@ public class EditProfileFragment extends Fragment {
     private void updateUI() {
 
         nameTxt.setText(mProfile.getName());
-        if (!mProfile.getPhone().isEmpty())
+        if (!TextUtils.isEmpty(mProfile.getPhone()))
             phoneTxt.setText(mProfile.getPhone());
 
-        if (!mProfile.getBio().isEmpty())
+        if (!TextUtils.isEmpty(mProfile.getBio()))
             bioTxt.setText(mProfile.getBio());
 
         Glide.with(this)

@@ -65,8 +65,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         String currentUser = mAuth.getCurrentUser().getUid();
         Chat chat = chatList.get(position);
 
-        if (chat.getSender().equals(currentUser)) return CHAT_LEFT_ITEM;
-        if (chat.getReceiver().equals(currentUser)) return CHAT_RIGHT_ITEM;
+        if (chat.getSender().equals(currentUser)) return CHAT_RIGHT_ITEM;
+        if (chat.getReceiver().equals(currentUser)) return CHAT_LEFT_ITEM;
 
         return super.getItemViewType(position);
     }

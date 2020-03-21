@@ -2,6 +2,7 @@ package com.mysasse.afyasmart;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -158,10 +159,10 @@ public class HomeActivity extends AppCompatActivity {
                         //Set the display name
                         assert mProfile != null;
 
-                        if (!mProfile.getName().isEmpty())
+                        if (!TextUtils.isEmpty(mProfile.getName()))
                             userNameTv.setText(mProfile.getName());
 
-                        if (!mProfile.getAvatar().isEmpty())
+                        if (!TextUtils.isEmpty(mProfile.getAvatar()))
                             Glide.with(this)
                                     .load(mProfile.getAvatar())
                                     .centerCrop()
