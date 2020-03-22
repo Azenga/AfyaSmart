@@ -110,6 +110,7 @@ public class AddPostFragment extends Fragment {
                 postImageUploadTask.addOnSuccessListener(taskSnapshot -> postImageRef.getDownloadUrl().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Uri remotePostImageUri = task.getResult();
+                        assert remotePostImageUri != null;
                         post.setImage(remotePostImageUri.toString());
 
                         uploadPost(post);
@@ -137,6 +138,8 @@ public class AddPostFragment extends Fragment {
                     if (task.isSuccessful()) {
                         Toast.makeText(getContext(), "Post Added", Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "uploadPost: Post Added Successfully");
+                        assert getActivity() != null;
+                        getActivity().onBackPressed();
                     } else {
 
                         Toast.makeText(getContext(), "Post upload failed", Toast.LENGTH_SHORT).show();

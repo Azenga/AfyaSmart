@@ -43,9 +43,21 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/title_hint"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/post_image_view" />
+
+    <TextView
+        android:id="@+id/post_excerpt_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/post_excerpt_text"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/post_title_tv" />
 
     <ImageButton
         android:id="@+id/favorite_image_button"

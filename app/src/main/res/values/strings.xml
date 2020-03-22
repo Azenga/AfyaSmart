@@ -49,8 +49,9 @@
     <string name="notifications_text">Notifications</string>
     <string name="role_text">Role…</string>
     <string name="message_default">Your message should go here…</string>
-    <string name="messsage_hint">Messsage...</string>
+    <string name="message_hint">Message…</string>
     <string name="send_icon_text">Send Icon</string>
     <string name="vertical_more_text">Vertical More</string>
     <string name="chat_room_text">Chat Room</string>
+    <string name="post_excerpt_text">Insights of the post that the user can go through and understand what the post is all about</string>
 </resources>

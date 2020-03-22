@@ -29,7 +29,7 @@
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/send_message_ib"
             android:background="@android:color/transparent"
-            android:hint="@string/messsage_hint"
+            android:hint="@string/message_hint"
             android:inputType="textImeMultiLine"
             android:padding="8dp"
             android:textColor="@android:color/black" />
