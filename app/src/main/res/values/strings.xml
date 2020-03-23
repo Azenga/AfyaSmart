@@ -54,4 +54,8 @@
     <string name="vertical_more_text">Vertical More</string>
     <string name="chat_room_text">Chat Room</string>
     <string name="post_excerpt_text">Insights of the post that the user can go through and understand what the post is all about</string>
+    <string name="area_of_expertise_text">Area of Expertise</string>
+    <string name="send_request_text">Send Request</string>
+    <string name="claim_a_doctor_text">Claim A Doctor</string>
+    <string name="doctor_warning_text">You will be vetted by the relevant application authorities to verify whether you are who you claim and whether you are really of help to the system, there after your role might change to doctor where you can access extra privileges and ability to advice on your area of expertise or any other case that you have tangible experience, please don\'t even think to lie to us, cause we will catch up with you.</string>
 </resources>

@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="com.mysasse.afyasmart.ui.fragments.HomeFragment"
         android:label="@string/home_text"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_claimDoctorFragment"
+            app:destination="@id/claimDoctorFragment" />
+    </fragment>
     <fragment
         android:id="@+id/diseasesFragment"
         android:name="com.mysasse.afyasmart.ui.fragments.diseases.DiseasesFragment"
@@ -93,5 +97,10 @@
             android:name="receiver"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/claimDoctorFragment"
+        android:name="com.mysasse.afyasmart.ui.fragments.ClaimDoctorFragment"
+        android:label="@string/claim_a_doctor_text"
+        tools:layout="@layout/fragment_claim_doctor" />
 
 </navigation>
