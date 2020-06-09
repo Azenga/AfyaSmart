@@ -22,6 +22,14 @@
         android:text="@string/doctor_warning_text"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
+    <ProgressBar
+        android:id="@+id/claim_a_doctor_progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:visibility="gone" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

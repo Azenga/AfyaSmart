@@ -56,7 +56,7 @@ public class AllChatUsersFragment extends Fragment implements UsersAdapter.UserI
     }
 
     @Override
-    public void openMessages(Profile profile) {
+    public void onClick(Profile profile) {
         Log.d(TAG, "openMessages: profile: " + profile.getId());
         AllChatUsersFragmentDirections.ActionAllChatUsersFragmentToChatRoomFragment action = AllChatUsersFragmentDirections.actionAllChatUsersFragmentToChatRoomFragment(profile.getId());
         Navigation.findNavController(usersRecyclerView).navigate(action);

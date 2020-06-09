@@ -29,6 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.mysasse.afyasmart.data.models.Profile;
 import com.mysasse.afyasmart.ui.AdminActivity;
 import com.mysasse.afyasmart.ui.LoginActivity;
+import com.mysasse.afyasmart.utils.UIHelpers;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -137,7 +138,9 @@ public class HomeActivity extends AppCompatActivity {
 
     private void sendToLogin() {
         Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     private void updateUI(FirebaseUser currentUser) {
@@ -145,11 +148,11 @@ public class HomeActivity extends AppCompatActivity {
 
         //Get and set the header details
         mDatabase.collection("profiles").document(currentUser.getUid())
-                .addSnapshotListener((documentSnapshot, e) -> {
+                .addSnapshotListener(this, (documentSnapshot, e) -> {
 
                     if (e != null) {
                         Log.e(TAG, "updateUI: error getting user profile", e);
-                        Toast.makeText(this, "Error getting usr profile", Toast.LENGTH_SHORT).show();
+                        UIHelpers.toast("Error getting user profile: " + e.getLocalizedMessage());
                         return;
                     }
 

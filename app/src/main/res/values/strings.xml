@@ -58,4 +58,14 @@
     <string name="send_request_text">Send Request</string>
     <string name="claim_a_doctor_text">Claim A Doctor</string>
     <string name="doctor_warning_text">You will be vetted by the relevant application authorities to verify whether you are who you claim and whether you are really of help to the system, there after your role might change to doctor where you can access extra privileges and ability to advice on your area of expertise or any other case that you have tangible experience, please don\'t even think to lie to us, cause we will catch up with you.</string>
+    <string name="caption_text">Caption…</string>
+    <string name="warning_text">You are about to switch a users account mode, which means they have the ability to add preventive measures available diseases, with the counter or rather controls for the disease, be sure you have vetted the person very well please!!</string>
+    <string name="change_role_text">Change Role</string>
+    <string name="switch_role_title_text">Switch Role</string>
+
+    <string-array name="roles">
+        <item>Patient</item>
+        <item>Doctor</item>
+        <item>Admin</item>
+    </string-array>
 </resources>

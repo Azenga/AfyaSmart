@@ -9,7 +9,11 @@
         android:id="@+id/allUsersFragment"
         android:name="com.mysasse.afyasmart.ui.fragments.users.AllUsersFragment"
         android:label="@string/all_users_text"
-        tools:layout="@layout/all_users_fragment" />
+        tools:layout="@layout/all_users_fragment">
+        <action
+            android:id="@+id/action_allUsersFragment_to_switchRoleFragment"
+            app:destination="@id/switchRoleFragment" />
+    </fragment>
     <fragment
         android:id="@+id/allDiseasesFragment"
         android:name="com.mysasse.afyasmart.ui.fragments.diseases.admin.AllDiseasesFragment"
@@ -19,5 +23,26 @@
         android:id="@+id/notificationsFragment"
         android:name="com.mysasse.afyasmart.ui.fragments.notifications.NotificationsFragment"
         android:label="@string/notifications_text"
-        tools:layout="@layout/notifications_fragment" />
+        tools:layout="@layout/notifications_fragment">
+        <action
+            android:id="@+id/action_notificationsFragment_to_switchRoleFragment"
+            app:destination="@id/switchRoleFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/switchRoleFragment"
+        android:name="com.mysasse.afyasmart.ui.fragments.SwitchRoleFragment"
+        android:label="@string/switch_role_title_text"
+        tools:layout="@layout/fragment_switch_role" >
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+        <argument
+            android:name="expertise"
+            app:argType="string"
+            app:nullable="true" />
+
+    </fragment>
 </navigation>

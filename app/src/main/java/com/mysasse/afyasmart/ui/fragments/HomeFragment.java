@@ -56,6 +56,7 @@ public class HomeFragment extends Fragment {
             dialog.show();
 
         });
+
         diseasesCardView.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.diseasesFragment));
         messagesCardView.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.messagesFragment));
         blogCardView.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.postsFragment));

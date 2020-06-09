@@ -36,7 +36,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
         holder.userNameTv.setText(profileList.get(position).getName());
         holder.userRoleTv.setText(profileList.get(position).getRole());
 
-        holder.mView.setOnClickListener(v -> mUserItemClicked.openMessages(profileList.get(position)));
+        holder.mView.setOnClickListener(v -> mUserItemClicked.onClick(profileList.get(position)));
     }
 
     @Override
@@ -60,6 +60,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     }
 
     public interface UserItemClicked {
-        void openMessages(Profile profile);
+        void onClick(Profile profile);
     }
 }

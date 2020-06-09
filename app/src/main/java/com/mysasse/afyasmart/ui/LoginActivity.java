@@ -1,7 +1,5 @@
 package com.mysasse.afyasmart.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,7 +8,8 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -18,11 +17,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mysasse.afyasmart.HomeActivity;
 import com.mysasse.afyasmart.R;
+import com.mysasse.afyasmart.utils.UIHelpers;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
     private FirebaseAuth mAuth;
+
 
     //Global accessible views
     private TextInputEditText emailTxt, passwordTxt;
@@ -62,9 +63,9 @@ public class LoginActivity extends AppCompatActivity {
                             return;
                         }
 
+                        assert task.getException() != null;
                         Log.e(TAG, "onCreate: signInWithEmailAndPassword-failed => ", task.getException());
-
-                        Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                        UIHelpers.toast("Login failed: " + task.getException().getLocalizedMessage());
                     });
         });
 
@@ -72,10 +73,17 @@ public class LoginActivity extends AppCompatActivity {
         signUpTv.setOnClickListener(view -> {
             //Start the register activity
             startActivity(new Intent(this, RegisterActivity.class));
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
 
     }
 
+
+    /**
+     * @param email    input by the user
+     * @param password input by user
+     * @return boolean if the inputs are valid
+     */
     private boolean hasInvalidInputs(String email, String password) {
 
         if (TextUtils.isEmpty(email)) {
@@ -111,12 +119,14 @@ public class LoginActivity extends AppCompatActivity {
 
         //Checking whether the user is already authenticated
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) finish();
+        if (currentUser != null) sendHome();
     }
 
     public void sendHome() {
         Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();
     }
 }

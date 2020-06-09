@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +31,6 @@ public class AllUsersFragment extends Fragment implements UsersAdapter.UserItemC
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         //Register the necessary views
         usersRecyclerView = view.findViewById(R.id.users_recycler_view);
         usersRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -51,7 +51,10 @@ public class AllUsersFragment extends Fragment implements UsersAdapter.UserItemC
     }
 
     @Override
-    public void openMessages(Profile profile) {
+    public void onClick(Profile profile) {
+        AllUsersFragmentDirections.ActionAllUsersFragmentToSwitchRoleFragment action =
+                AllUsersFragmentDirections.actionAllUsersFragmentToSwitchRoleFragment(profile.getId(), null);
 
+        Navigation.findNavController(usersRecyclerView).navigate(action);
     }
 }

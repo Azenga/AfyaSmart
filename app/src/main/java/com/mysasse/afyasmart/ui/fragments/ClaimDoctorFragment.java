@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -29,6 +30,7 @@ public class ClaimDoctorFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore mDatabase;
+    private ProgressBar claimADoctorProgressBar;
 
     public ClaimDoctorFragment() {
         // Required empty public constructor
@@ -54,6 +56,8 @@ public class ClaimDoctorFragment extends Fragment {
 
         Button sendRequestBtn = view.findViewById(R.id.send_request_btn);
 
+        claimADoctorProgressBar = view.findViewById(R.id.claim_a_doctor_progress_bar);
+
         sendRequestBtn.setOnClickListener(v -> {
 
             String expertise = String.valueOf(expertiseAreaTxt.getText());
@@ -66,6 +70,8 @@ public class ClaimDoctorFragment extends Fragment {
 
             //Get current user details
             assert mAuth.getCurrentUser() != null;
+
+            claimADoctorProgressBar.setVisibility(View.VISIBLE);
             mDatabase.collection("profiles").document(mAuth.getCurrentUser().getUid())
                     .addSnapshotListener((documentSnapshot, e) -> {
 
@@ -85,7 +91,6 @@ public class ClaimDoctorFragment extends Fragment {
                         addNotification(notification);
                     });
 
-
             Log.d(TAG, "onViewCreated: expertise " + expertise);
         });
     }
@@ -94,7 +99,7 @@ public class ClaimDoctorFragment extends Fragment {
         mDatabase.collection("notifications")
                 .add(notification)
                 .addOnCompleteListener(task -> {
-
+                    claimADoctorProgressBar.setVisibility(View.GONE);
                     if (task.isSuccessful()) {
                         Toast.makeText(getContext(), "Request sent successfully", Toast.LENGTH_SHORT).show();
                         assert getActivity() != null;
@@ -103,7 +108,7 @@ public class ClaimDoctorFragment extends Fragment {
 
                     } else {
                         Log.e(TAG, "addNotification: failed:", task.getException());
-                        Toast.makeText(getContext(), "Request sendng failed try again later", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Request sending failed try again later", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

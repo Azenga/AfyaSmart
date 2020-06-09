@@ -13,6 +13,7 @@ public class Profile implements Serializable {
     private String phone;
     private String role;
     private String bio;
+    private String expertise;
 
     private String avatar;
 
@@ -72,5 +73,13 @@ public class Profile implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getExpertise() {
+        return expertise;
+    }
+
+    public void setExpertise(String expertise) {
+        this.expertise = expertise;
     }
 }
