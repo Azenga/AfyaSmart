@@ -15,7 +15,6 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.mysasse.afyasmart.HomeActivity;
 import com.mysasse.afyasmart.R;
 import com.mysasse.afyasmart.utils.UIHelpers;
 

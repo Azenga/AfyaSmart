@@ -1,4 +1,4 @@
-package com.mysasse.afyasmart;
+package com.mysasse.afyasmart.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -26,9 +25,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.mysasse.afyasmart.R;
 import com.mysasse.afyasmart.data.models.Profile;
-import com.mysasse.afyasmart.ui.AdminActivity;
-import com.mysasse.afyasmart.ui.LoginActivity;
 import com.mysasse.afyasmart.utils.UIHelpers;
 
 import de.hdodenhof.circleimageview.CircleImageView;
