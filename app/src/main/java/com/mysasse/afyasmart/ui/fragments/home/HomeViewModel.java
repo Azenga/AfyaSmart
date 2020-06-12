@@ -1,4 +1,4 @@
-package com.mysasse.afyasmart.ui.fragments.diseases;
+package com.mysasse.afyasmart.ui.fragments.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -9,13 +9,12 @@ import com.mysasse.afyasmart.data.repositories.DiseaseRepository;
 
 import java.util.List;
 
-public class DiseasesViewModel extends ViewModel implements DiseaseRepository.DiseaseTaskListener {
+public class HomeViewModel extends ViewModel implements DiseaseRepository.DiseaseTaskListener {
 
     private MutableLiveData<List<Disease>> _diseases = new MutableLiveData<>();
     private MutableLiveData<Exception> _exception = new MutableLiveData<>();
 
-    public DiseasesViewModel() {
-
+    public HomeViewModel() {
         DiseaseRepository diseaseRepository = new DiseaseRepository(this);
 
         diseaseRepository.getAllDiseases();

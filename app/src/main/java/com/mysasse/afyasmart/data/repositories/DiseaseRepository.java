@@ -9,36 +9,38 @@ import java.util.List;
 
 public class DiseaseRepository {
 
-    private DiseaseTasklListener diseaseTasklListener;
+    private DiseaseTaskListener diseaseTaskListener;
 
     private static final String TAG = "DiseaseRepository";
 
-    private FirebaseFirestore mFirestore;
+    private FirebaseFirestore mDb;
 
-    public DiseaseRepository(DiseaseTasklListener diseaseTasklListener) {
-        mFirestore = FirebaseFirestore.getInstance();
+    public DiseaseRepository(DiseaseTaskListener diseaseTaskListener) {
 
-        this.diseaseTasklListener = diseaseTasklListener;
+        mDb = FirebaseFirestore.getInstance();
+
+        this.diseaseTaskListener = diseaseTaskListener;
     }
 
     public void getAllDiseases() {
 
-        mFirestore.collection("diseases")
+        mDb.collection("diseases")
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
                     if (e != null) {
                         Log.e(TAG, "getAllDiseases: Failed:", e);
-                        diseaseTasklListener.showError(e);
+                        diseaseTaskListener.showError(e);
                         return;
                     }
                     assert queryDocumentSnapshots != null;
+
                     Log.d(TAG, "getAllDiseases: Fetched: count => " + queryDocumentSnapshots.size());
                     List<Disease> diseaseList = queryDocumentSnapshots.toObjects(Disease.class);
-                    diseaseTasklListener.showDiseases(diseaseList);
+                    diseaseTaskListener.showDiseases(diseaseList);
                 });
     }
 
 
-    public interface DiseaseTasklListener {
+    public interface DiseaseTaskListener {
         void showDiseases(List<Disease> diseases);
 
         void showError(Exception exception);

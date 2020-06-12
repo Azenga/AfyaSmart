@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.mysasse.afyasmart.R;
 import com.mysasse.afyasmart.data.models.Profile;
 
@@ -34,31 +35,27 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorVi
     public void onBindViewHolder(@NonNull DoctorViewHolder holder, int position) {
         Profile profile = profiles.get(position);
 
-        /*
         holder.doctorNameTv.setText(profile.getName());
         holder.doctorExpertiseTv.setText(profile.getExpertise());
-        holder.doctorRoleTv.setText(profile.getRole());
 
 
         Glide.with(holder.doctorAvatarCiv)
                 .load(profile.getAvatar())
                 .centerCrop()
-                .placeholder(R.drawable.ic_account_circle)
+                .placeholder(R.drawable.ic_account_circle_black_48dp)
                 .into(holder.doctorAvatarCiv);
 
-         */
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return profiles.size();
     }
 
     static class DoctorViewHolder extends RecyclerView.ViewHolder {
 
         CircleImageView doctorAvatarCiv;
         TextView doctorNameTv;
-        TextView doctorRoleTv;
         TextView doctorExpertiseTv;
 
         DoctorViewHolder(@NonNull View itemView) {
@@ -66,8 +63,7 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorVi
 
             doctorAvatarCiv = itemView.findViewById(R.id.doctor_avatar_civ);
             doctorNameTv = itemView.findViewById(R.id.doctor_name_tv);
-            doctorRoleTv = itemView.findViewById(R.id.doctor_role_tv);
-            doctorExpertiseTv = itemView.findViewById(R.id.doctor_expertise_tv);
+            doctorExpertiseTv = itemView.findViewById(R.id.doctor_area_of_expertise_tv);
         }
     }
 }

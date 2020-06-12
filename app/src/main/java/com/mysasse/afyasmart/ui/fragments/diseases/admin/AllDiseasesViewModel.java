@@ -11,7 +11,7 @@ import com.mysasse.afyasmart.data.repositories.DiseaseRepository;
 
 import java.util.List;
 
-public class AllDiseasesViewModel extends ViewModel implements DiseaseRepository.DiseaseTasklListener {
+public class AllDiseasesViewModel extends ViewModel implements DiseaseRepository.DiseaseTaskListener {
     private static final String TAG = "AllDiseasesViewModel";
 
     private MutableLiveData<List<Disease>> _disease;

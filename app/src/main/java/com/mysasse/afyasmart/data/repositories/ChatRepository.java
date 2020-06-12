@@ -9,18 +9,21 @@ import com.mysasse.afyasmart.data.models.Chat;
 import java.util.List;
 
 public class ChatRepository {
+
     private static final String TAG = "ChatRepository";
 
-    private FirebaseFirestore mDatabase;
+    private FirebaseFirestore mDb;
     private ChatTaskListener listener;
 
     public ChatRepository(ChatTaskListener listener) {
         this.listener = listener;
-        mDatabase = FirebaseFirestore.getInstance();
+        mDb = FirebaseFirestore.getInstance();
     }
 
     public void getChatsFromFirebase() {
-        mDatabase.collection("chats")
+
+        //Getting all chats from the fire-store
+        mDb.collection("chats")
                 .orderBy("timestamp", Query.Direction.ASCENDING)
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
                     if (e != null) {

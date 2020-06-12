@@ -29,8 +29,12 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.DiseaseV
 
     @Override
     public void onBindViewHolder(@NonNull DiseaseViewHolder holder, int position) {
-        holder.nameTv.setText(diseaseList.get(position).getName());
-        holder.descriptionTv.setText(diseaseList.get(position).getDescription());
+        holder.nameTv.setText(trimToSizeIfLong(diseaseList.get(position).getName(), 15));
+        holder.descriptionTv.setText(trimToSizeIfLong(diseaseList.get(position).getDescription(), 72));
+    }
+
+    private String trimToSizeIfLong(String content, int size) {
+        return (content.length() > size) ? content.substring(0, size) + "..." : content;
     }
 
     @Override
@@ -38,7 +42,7 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.DiseaseV
         return diseaseList.size();
     }
 
-    class DiseaseViewHolder extends RecyclerView.ViewHolder {
+    static class DiseaseViewHolder extends RecyclerView.ViewHolder {
         TextView nameTv, descriptionTv;
 
         DiseaseViewHolder(@NonNull View itemView) {

@@ -62,6 +62,9 @@
     <string name="warning_text">You are about to switch a users account mode, which means they have the ability to add preventive measures available diseases, with the counter or rather controls for the disease, be sure you have vetted the person very well please!!</string>
     <string name="change_role_text">Change Role</string>
     <string name="switch_role_title_text">Switch Role</string>
+    <string name="sample_symptoms_count">20 symptoms</string>
+    <string name="sample_measures_count">30 Measures</string>
+    <string name="sample_area_of_expertise">Gynaechologist</string>
 
     <string-array name="roles">
         <item>Patient</item>

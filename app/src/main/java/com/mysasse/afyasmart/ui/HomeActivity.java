@@ -88,9 +88,8 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if (item.getItemId() == R.id.logout) {
+        if (item.getItemId() == R.id.logout_option) {
             AlertDialog.Builder logoutDialog = new AlertDialog.Builder(this)
-                    .setIcon(ContextCompat.getDrawable(this, R.drawable.ic_account_circle_black_48dp))
                     .setMessage("Are sure you want to logout ?")
                     .setPositiveButton("Sure", (dialog, which) -> {
                         mAuth.signOut();
@@ -105,7 +104,7 @@ public class HomeActivity extends AppCompatActivity {
             return true;
         }
 
-        if (item.getItemId() == R.id.admin_menu_item) {
+        if (item.getItemId() == R.id.admin_dashboard_option) {
             startActivity(new Intent(this, AdminActivity.class));
             return true;
         }

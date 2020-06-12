@@ -10,21 +10,22 @@ public class ProfileRepository {
     private static final String TAG = "ProfileRepository";
 
     private FirebaseAuth mAuth;
-    private FirebaseFirestore mDatabase;
+    private FirebaseFirestore mDb;
     private UserProfileListener listener;
 
     public ProfileRepository(UserProfileListener listener) {
         this.listener = listener;
 
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseFirestore.getInstance();
+        mDb = FirebaseFirestore.getInstance();
     }
 
     public void getAuthenticatedUserProfile() {
+
         String userUid = mAuth.getUid();
         assert userUid != null;
 
-        mDatabase.collection("profiles")
+        mDb.collection("profiles")
                 .document(userUid)
                 .addSnapshotListener((documentSnapshot, e) -> {
                     if (e != null) {
