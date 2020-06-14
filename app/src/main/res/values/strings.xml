@@ -71,4 +71,10 @@
         <item>Doctor</item>
         <item>Admin</item>
     </string-array>
+
+    <string name="disease_name_guidelines">Give a common name for the disease, it should be more that three characters in size</string>
+    <string name="disease_description_guidelines">A verbose clear description for the disease you are adding in at least 100 characters, use correct grammar</string>
+    <string name="adding_a_disease_text">Adding a disease...</string>
+    <string name="edit_disease_text">Edit Disease</string>
+    <string name="delete_disease_text">Delete Disease</string>
 </resources>

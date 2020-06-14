@@ -8,14 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mysasse.afyasmart.R;
 import com.mysasse.afyasmart.data.models.Disease;
@@ -25,13 +25,9 @@ public class AddDiseaseFragment extends Fragment {
 
     private FirebaseFirestore mDatabase;
 
-    private EditText nameTxt;
-    private EditText descriptionTxt;
-
-    public AddDiseaseFragment() {
-
-    }
-
+    private TextInputEditText nameTxt;
+    private TextInputEditText descriptionTxt;
+    private Group addDiseaseGroup;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,18 +46,20 @@ public class AddDiseaseFragment extends Fragment {
         mDatabase = FirebaseFirestore.getInstance();
 
         Button addDiseaseButton = view.findViewById(R.id.add_disease_button);
-        ProgressBar addDiseaseProgressBar = view.findViewById(R.id.add_disease_progress_bar);
+
+        addDiseaseGroup = view.findViewById(R.id.add_disease_group);
 
         addDiseaseButton.setOnClickListener(v -> {
+
             String name = String.valueOf(nameTxt.getText());
             String description = String.valueOf(descriptionTxt.getText());
 
             if (hasInvalidInputs(name, description)) return;
 
-            addDiseaseProgressBar.setVisibility(View.VISIBLE);
+            addDiseaseGroup.setVisibility(View.VISIBLE);
             mDatabase.collection("diseases").add(new Disease(name, description)).addOnCompleteListener(
                     task -> {
-                        addDiseaseProgressBar.setVisibility(View.GONE);
+                        addDiseaseGroup.setVisibility(View.GONE);
 
                         if (task.isSuccessful()) {
                             Toast.makeText(getContext(), "Product Added", Toast.LENGTH_SHORT).show();
@@ -79,8 +77,16 @@ public class AddDiseaseFragment extends Fragment {
 
     private boolean hasInvalidInputs(String name, String description) {
 
+        //Check whether the name is empty
         if (TextUtils.isEmpty(name)) {
             nameTxt.setError("Name is required");
+            nameTxt.requestFocus();
+            return true;
+        }
+
+        //Check the length of the diseases name
+        if (name.length() < 3) {
+            nameTxt.setError("Name should be at least 3 characters");
             nameTxt.requestFocus();
             return true;
         }
@@ -88,6 +94,13 @@ public class AddDiseaseFragment extends Fragment {
         if (TextUtils.isEmpty(description)) {
             descriptionTxt.setError("Description is required");
             descriptionTxt.requestFocus();
+            return true;
+        }
+
+        //Check the length of the diseases name
+        if (description.length() < 100) {
+            nameTxt.setError("Description should be at least 100 characters");
+            nameTxt.requestFocus();
             return true;
         }
 

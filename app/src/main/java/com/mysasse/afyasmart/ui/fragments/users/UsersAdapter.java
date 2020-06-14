@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.mysasse.afyasmart.R;
 import com.mysasse.afyasmart.data.models.Profile;
 
@@ -35,6 +36,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         holder.userNameTv.setText(profileList.get(position).getName());
         holder.userRoleTv.setText(profileList.get(position).getRole());
+
+        Glide.with(holder.userAvatarCiv)
+                .load(profileList.get(position).getAvatar())
+                .centerCrop()
+                .placeholder(R.drawable.ic_account_circle_black_48dp)
+                .into(holder.userAvatarCiv);
 
         holder.mView.setOnClickListener(v -> mUserItemClicked.onClick(profileList.get(position)));
     }

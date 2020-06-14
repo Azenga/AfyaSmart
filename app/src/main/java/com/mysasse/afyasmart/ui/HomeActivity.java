@@ -35,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
 
     private AppBarConfiguration mAppBarConfiguration;
+    private NavController navController;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore mDatabase;
@@ -67,7 +68,7 @@ public class HomeActivity extends AppCompatActivity {
                 .setOpenableLayout(drawerLayout)
                 .build();
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -104,6 +105,11 @@ public class HomeActivity extends AppCompatActivity {
             return true;
         }
 
+        if (item.getItemId() == R.id.doctor_role_request_option) {
+            navController.navigate(R.id.claimDoctorFragment);
+            return true;
+        }
+
         if (item.getItemId() == R.id.admin_dashboard_option) {
             startActivity(new Intent(this, AdminActivity.class));
             return true;
@@ -115,7 +121,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 

@@ -97,6 +97,7 @@
             android:name="receiver"
             app:argType="string" />
     </fragment>
+
     <fragment
         android:id="@+id/claimDoctorFragment"
         android:name="com.mysasse.afyasmart.ui.fragments.ClaimDoctorFragment"
