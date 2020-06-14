@@ -136,7 +136,7 @@ public class HomeActivity extends AppCompatActivity {
                 menu.removeItem(R.id.admin_dashboard_option);
             }
 
-            if (mProfile.getRole().equals("Doctor")) {
+            if (!mProfile.getRole().equals("Patient")) {
 
                 menu.removeItem(R.id.doctor_role_request_option);
 

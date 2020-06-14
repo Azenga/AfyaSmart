@@ -48,7 +48,6 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     static class NotificationsViewHolder extends RecyclerView.ViewHolder {
         TextView titleTv;
         TextView bodyTv;
-        TextView captionTv;
         View mView;
 
         NotificationsViewHolder(@NonNull View itemView) {
@@ -57,7 +56,6 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
             mView = itemView;
             titleTv = itemView.findViewById(R.id.title_tv);
             bodyTv = itemView.findViewById(R.id.body_tv);
-            captionTv = itemView.findViewById(R.id.caption_tv);
         }
     }
 

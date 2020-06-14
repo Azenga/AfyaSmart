@@ -11,17 +11,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mysasse.afyasmart.R;
 import com.mysasse.afyasmart.data.models.Notification;
+import com.mysasse.afyasmart.utils.UIHelpers;
 
 public class NotificationsFragment extends Fragment implements NotificationsAdapter.NotificationClickListener {
 
     private RecyclerView notificationsRecyclerView;
     private NotificationsViewModel mViewModel;
+
+    private NavController mNavController;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -32,10 +37,19 @@ public class NotificationsFragment extends Fragment implements NotificationsAdap
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+        mNavController = Navigation.findNavController(view);
+
         //Register the necessary views
         notificationsRecyclerView = view.findViewById(R.id.notification_recycler_view);
         notificationsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         notificationsRecyclerView.setHasFixedSize(true);
+
+        notificationsRecyclerView.addItemDecoration(
+                new DividerItemDecoration(
+                        requireContext(),
+                        LinearLayoutManager.VERTICAL
+                )
+        );
 
     }
 
@@ -60,12 +74,25 @@ public class NotificationsFragment extends Fragment implements NotificationsAdap
         builder.setItems(items, (dialog, which) -> {
             switch (which) {
                 case 0:
+
+                    NotificationsFragmentDirections.ActionNotificationsFragmentToSwitchRoleFragment action = NotificationsFragmentDirections.actionNotificationsFragmentToSwitchRoleFragment(notification.getUserId());
+                    mNavController.navigate(action);
+
                     break;
                 case 1:
-                    mViewModel.deleteNotification(notification);
+
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(requireContext());
+                    alertDialog.setTitle("Deleting a notification");
+                    alertDialog.setMessage("Are sure you want to delete the notification " + notification.getTitle());
+
+                    alertDialog.setPositiveButton("Sure", ((dialog1, which1) -> mViewModel.deleteNotification(notification)));
+                    alertDialog.setNegativeButton("Cancel", ((dialog1, which1) -> UIHelpers.toast("Operation cancelled")));
+                    alertDialog.show();
+
+
                     break;
                 default:
-                    Toast.makeText(getContext(), "Select from the available options please", Toast.LENGTH_SHORT).show();
+                    UIHelpers.toast("Select from the available options please");
             }
         });
 

@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,6 +36,13 @@ public class AllUsersFragment extends Fragment implements UsersAdapter.UserItemC
         usersRecyclerView = view.findViewById(R.id.users_recycler_view);
         usersRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         usersRecyclerView.setHasFixedSize(true);
+
+        usersRecyclerView.addItemDecoration(
+                new DividerItemDecoration(
+                        requireContext(),
+                        LinearLayoutManager.VERTICAL
+                )
+        );
     }
 
     @Override
@@ -53,7 +61,7 @@ public class AllUsersFragment extends Fragment implements UsersAdapter.UserItemC
     @Override
     public void onClick(Profile profile) {
         AllUsersFragmentDirections.ActionAllUsersFragmentToSwitchRoleFragment action =
-                AllUsersFragmentDirections.actionAllUsersFragmentToSwitchRoleFragment(profile.getId(), null);
+                AllUsersFragmentDirections.actionAllUsersFragmentToSwitchRoleFragment(profile.getId());
 
         Navigation.findNavController(usersRecyclerView).navigate(action);
     }

@@ -33,16 +33,11 @@
         android:id="@+id/switchRoleFragment"
         android:name="com.mysasse.afyasmart.ui.fragments.SwitchRoleFragment"
         android:label="@string/switch_role_title_text"
-        tools:layout="@layout/fragment_switch_role" >
+        tools:layout="@layout/fragment_switch_role">
 
         <argument
             android:name="userId"
             app:argType="string" />
-
-        <argument
-            android:name="expertise"
-            app:argType="string"
-            app:nullable="true" />
 
     </fragment>
 </navigation>
