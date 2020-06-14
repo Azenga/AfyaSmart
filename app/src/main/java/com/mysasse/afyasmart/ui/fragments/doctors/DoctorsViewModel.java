@@ -33,6 +33,11 @@ public class DoctorsViewModel extends ViewModel implements DoctorsRepository.Doc
     }
 
     @Override
+    public void onDoctorAdded() {
+
+    }
+
+    @Override
     public void onError(Exception error) {
         _exception.setValue(error);
     }

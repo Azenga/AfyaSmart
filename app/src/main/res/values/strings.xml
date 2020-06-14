@@ -37,7 +37,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="account_circle_drawable_text">Account Circle Drawable</string>
-    <string name="my_contact_text">+254700016349</string>
+    <string name="contact_hint">Contact…</string>
     <string name="user_roles_avatar_text">User Roles Avatar</string>
     <string name="patient_text">Patient</string>
     <string name="edit_profile_text">Edit Profile</string>
@@ -54,7 +54,7 @@
     <string name="vertical_more_text">Vertical More</string>
     <string name="chat_room_text">Chat Room</string>
     <string name="post_excerpt_text">Insights of the post that the user can go through and understand what the post is all about</string>
-    <string name="area_of_expertise_text">Area of Expertise</string>
+    <string name="area_of_expertise_hint">Area of Expertise…</string>
     <string name="send_request_text">Send Request</string>
     <string name="claim_a_doctor_text">Claim A Doctor</string>
     <string name="doctor_warning_text">You will be vetted by the relevant application authorities to verify whether you are who you claim and whether you are really of help to the system, there after your role might change to doctor where you can access extra privileges and ability to advice on your area of expertise or any other case that you have tangible experience, please don\'t even think to lie to us, cause we will catch up with you.</string>
@@ -64,7 +64,7 @@
     <string name="switch_role_title_text">Switch Role</string>
     <string name="sample_symptoms_count">20 symptoms</string>
     <string name="sample_measures_count">30 Measures</string>
-    <string name="sample_area_of_expertise">Gynaechologist</string>
+    <string name="sample_area_of_expertise">Gynaecologist</string>
 
     <string-array name="roles">
         <item>Patient</item>
@@ -74,7 +74,15 @@
 
     <string name="disease_name_guidelines">Give a common name for the disease, it should be more that three characters in size</string>
     <string name="disease_description_guidelines">A verbose clear description for the disease you are adding in at least 100 characters, use correct grammar</string>
-    <string name="adding_a_disease_text">Adding a disease...</string>
+    <string name="adding_a_disease_text">Adding a disease…</string>
     <string name="edit_disease_text">Edit Disease</string>
     <string name="delete_disease_text">Delete Disease</string>
+    <string name="search_disease_text">Search Disease</string>
+    <string name="search_disease_hint">Search Disease…</string>
+    <string name="top_most_award_hint">Top Most Award…</string>
+    <string name="trained_institution_hint">Trained Institution…</string>
+    <string name="currently_working_where_hint">Currently Working Where…</string>
+    <string name="profession_history_hint">Profession History…</string>
+    <string name="doctors_information_text">Doctors Information</string>
+    <string name="send_request_hint">Sending Request…</string>
 </resources>

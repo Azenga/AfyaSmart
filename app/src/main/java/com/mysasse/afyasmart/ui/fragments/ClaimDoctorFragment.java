@@ -1,46 +1,40 @@
 package com.mysasse.afyasmart.ui.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mysasse.afyasmart.R;
+import com.mysasse.afyasmart.data.models.Doctor;
 import com.mysasse.afyasmart.data.models.Notification;
-import com.mysasse.afyasmart.data.models.Profile;
+import com.mysasse.afyasmart.utils.UIHelpers;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+import static com.mysasse.afyasmart.data.Constants.DOCTORS_NODE;
+import static com.mysasse.afyasmart.data.Constants.NOTIFICATIONS_NODE;
+
 public class ClaimDoctorFragment extends Fragment {
     private static final String TAG = "ClaimDoctorFragment";
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore mDatabase;
-    private ProgressBar claimADoctorProgressBar;
-
-    public ClaimDoctorFragment() {
-        // Required empty public constructor
-    }
+    private Group sendingRequestGroup;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_claim_doctor, container, false);
     }
 
@@ -52,63 +46,93 @@ public class ClaimDoctorFragment extends Fragment {
         mDatabase = FirebaseFirestore.getInstance();
 
         //Register necessary view
-        TextInputEditText expertiseAreaTxt = view.findViewById(R.id.expertise_area_txt);
+        TextInputEditText expertiseAreaField = view.findViewById(R.id.expertise_area_field);
+        TextInputEditText topMostAwardField = view.findViewById(R.id.top_most_award_field);
+        TextInputEditText trainedInstitutionField = view.findViewById(R.id.trained_institution_field);
+        TextInputEditText currentlyWorkingWhereField = view.findViewById(R.id.currently_working_where_field);
+        TextInputEditText professionHistoryField = view.findViewById(R.id.profession_history_field);
 
         Button sendRequestBtn = view.findViewById(R.id.send_request_btn);
 
-        claimADoctorProgressBar = view.findViewById(R.id.claim_a_doctor_progress_bar);
+        sendingRequestGroup = view.findViewById(R.id.sending_request_group);
 
         sendRequestBtn.setOnClickListener(v -> {
 
-            String expertise = String.valueOf(expertiseAreaTxt.getText());
+            String expertiseArea = String.valueOf(expertiseAreaField.getText());
+            String topMostAward = String.valueOf(topMostAwardField.getText());
+            String trainedInstitution = String.valueOf(trainedInstitutionField.getText());
+            String currentlyWorkingWhere = String.valueOf(currentlyWorkingWhereField.getText());
+            String professionHistory = String.valueOf(professionHistoryField.getText());
 
-            if (TextUtils.isEmpty(expertise)) {
-                expertiseAreaTxt.setError("You must have something to offer");
-                expertiseAreaTxt.requestFocus();
+            //Field Validations
+
+            if (TextUtils.isEmpty(expertiseArea)) {
+                expertiseAreaField.setError("You must specify you area of expertise");
+                expertiseAreaField.requestFocus();
                 return;
             }
+
+            if (TextUtils.isEmpty(topMostAward)) {
+                topMostAwardField.setError("Your top most achievement is required");
+                topMostAwardField.requestFocus();
+                return;
+            }
+
+            if (TextUtils.isEmpty(trainedInstitution)) {
+                trainedInstitutionField.setError("You must specify award institution");
+                trainedInstitutionField.requestFocus();
+                return;
+            }
+
+            if (TextUtils.isEmpty(currentlyWorkingWhere)) {
+                currentlyWorkingWhereField.setError("Which hospital are current working with or at?");
+                currentlyWorkingWhereField.requestFocus();
+                return;
+            }
+
+            if (TextUtils.isEmpty(professionHistory)) {
+                professionHistoryField.setError("Tell us a little about your professional life");
+                professionHistoryField.requestFocus();
+                return;
+            }
+
+            //Create a new doctor instance
+            Doctor doctor = new Doctor(expertiseArea, topMostAward, currentlyWorkingWhere, trainedInstitution, professionHistory);
 
             //Get current user details
             assert mAuth.getCurrentUser() != null;
 
-            claimADoctorProgressBar.setVisibility(View.VISIBLE);
-            mDatabase.collection("profiles").document(mAuth.getCurrentUser().getUid())
-                    .addSnapshotListener((documentSnapshot, e) -> {
+            sendingRequestGroup.setVisibility(View.VISIBLE);
+            mDatabase.collection(DOCTORS_NODE).document(mAuth.getCurrentUser().getUid())
+                    .set(doctor)
+                    .addOnSuccessListener(aVoid -> {
 
-                        if (e != null) {
-                            Log.e(TAG, "onViewCreated: getting current user: ", e);
-                            return;
-                        }
-                        assert documentSnapshot != null;
-
-                        Profile profile = documentSnapshot.toObject(Profile.class);
-
-                        assert profile != null;
-                        Notification notification = new Notification(mAuth.getCurrentUser().getUid(), profile.getName(), "I am a doctor, I need elevations", "role_change");
-
-                        notification.setExpertise(expertise);
+                        Notification notification = new Notification(mAuth.getCurrentUser().getUid(), "Claim a doctor", "I am a doctor with expertise in " + expertiseArea + ", I need elevations please", "role_change");
 
                         addNotification(notification);
+                    })
+                    .addOnFailureListener(exception -> {
+                        sendingRequestGroup.setVisibility(View.INVISIBLE);
+                        UIHelpers.toast("Error while sending request");
+                        Log.e(TAG, "onViewCreated: ", exception);
                     });
 
-            Log.d(TAG, "onViewCreated: expertise " + expertise);
         });
     }
 
     private void addNotification(Notification notification) {
-        mDatabase.collection("notifications")
+        mDatabase.collection(NOTIFICATIONS_NODE)
                 .add(notification)
                 .addOnCompleteListener(task -> {
-                    claimADoctorProgressBar.setVisibility(View.GONE);
+                    sendingRequestGroup.setVisibility(View.GONE);
                     if (task.isSuccessful()) {
-                        Toast.makeText(getContext(), "Request sent successfully", Toast.LENGTH_SHORT).show();
-                        assert getActivity() != null;
 
-                        getActivity().onBackPressed();
+                        UIHelpers.toast("Request sent successfully");
+                        requireActivity().onBackPressed();
 
                     } else {
                         Log.e(TAG, "addNotification: failed:", task.getException());
-                        Toast.makeText(getContext(), "Request sending failed try again later", Toast.LENGTH_SHORT).show();
+                        UIHelpers.toast("Request sending failed try again later");
                     }
                 });
     }

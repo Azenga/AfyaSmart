@@ -36,7 +36,6 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
         holder.titleTv.setText(notification.getTitle());
         holder.bodyTv.setText(notification.getBody());
-        holder.captionTv.setText(notification.getExpertise());
 
         holder.mView.setOnClickListener(view -> listener.onClick(notification));
     }

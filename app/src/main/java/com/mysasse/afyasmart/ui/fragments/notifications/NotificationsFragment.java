@@ -53,16 +53,13 @@ public class NotificationsFragment extends Fragment implements NotificationsAdap
 
     @Override
     public void onClick(Notification notification) {
-        CharSequence[] items = new CharSequence[]{"Switch Account Mode", "Delete notification"};
+        CharSequence[] items = new CharSequence[]{"Switch User Role", "Delete notification"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         builder.setItems(items, (dialog, which) -> {
             switch (which) {
                 case 0:
-                    NotificationsFragmentDirections.ActionNotificationsFragmentToSwitchRoleFragment action =
-                            NotificationsFragmentDirections.actionNotificationsFragmentToSwitchRoleFragment(notification.getUserId(), notification.getExpertise());
-                    Navigation.findNavController(notificationsRecyclerView).navigate(action);
                     break;
                 case 1:
                     mViewModel.deleteNotification(notification);

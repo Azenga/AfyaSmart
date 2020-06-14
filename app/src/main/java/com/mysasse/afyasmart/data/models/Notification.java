@@ -12,7 +12,6 @@ public class Notification implements Serializable {
     private String userId;
     private String title;
     private String body;
-    private String expertise;
 
     private String type;
 
@@ -64,13 +63,5 @@ public class Notification implements Serializable {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getExpertise() {
-        return expertise;
-    }
-
-    public void setExpertise(String expertise) {
-        this.expertise = expertise;
     }
 }

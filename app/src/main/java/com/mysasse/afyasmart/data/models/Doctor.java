@@ -13,17 +13,17 @@ public class Doctor implements Serializable {
     private String topMostAward;
     private String currentlyWorkingWhere;
     private String trainingInstitution;
-    private String history;
+    private String professionHistory;
 
     public Doctor() {
     }
 
-    public Doctor(String areaOfExpertise, String topMostAward, String currentlyWorkingWhere, String trainingInstitution, String history) {
+    public Doctor(String areaOfExpertise, String topMostAward, String currentlyWorkingWhere, String trainingInstitution, String professionHistory) {
         this.areaOfExpertise = areaOfExpertise;
         this.topMostAward = topMostAward;
         this.currentlyWorkingWhere = currentlyWorkingWhere;
         this.trainingInstitution = trainingInstitution;
-        this.history = history;
+        this.professionHistory = professionHistory;
     }
 
     public String getId() {
@@ -66,11 +66,11 @@ public class Doctor implements Serializable {
         this.trainingInstitution = trainingInstitution;
     }
 
-    public String getHistory() {
-        return history;
+    public String getProfessionHistory() {
+        return professionHistory;
     }
 
-    public void setHistory(String history) {
-        this.history = history;
+    public void setProfessionHistory(String professionHistory) {
+        this.professionHistory = professionHistory;
     }
 }

@@ -1,14 +1,8 @@
 package com.mysasse.afyasmart.ui.fragments.profile;
 
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -17,7 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
@@ -27,6 +24,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mysasse.afyasmart.R;
 import com.mysasse.afyasmart.data.models.Profile;
+import com.mysasse.afyasmart.utils.UIHelpers;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -51,10 +49,6 @@ public class EditProfileFragment extends Fragment {
     private ProgressBar updateProfileProgressBar;
     private Profile mProfile = null;
     private TextInputEditText bioTxt;
-
-    public EditProfileFragment() {
-        // Required empty public constructor
-    }
 
 
     @Override
@@ -109,11 +103,13 @@ public class EditProfileFragment extends Fragment {
 
             if (!hasValidData(name, phone)) return;
 
-            //Check whether there is an image in the imageUri and upload it or else just upload the rest of the details
-            Profile profile = new Profile(name, phone, "Patient", bio);
+            //Update the loaded profile with new data
+            mProfile.setName(name);
+            mProfile.setPhone(phone);
+            mProfile.setBio(bio);
 
             if (userAvatarUri == null) {
-                Toast.makeText(getActivity(), "Select a profile picture before updating", Toast.LENGTH_SHORT).show();
+                UIHelpers.toast("Select a profile picture before updating");
                 return;
             }
 
@@ -130,16 +126,16 @@ public class EditProfileFragment extends Fragment {
                     userAvatarRef.getDownloadUrl().addOnCompleteListener(downLoadUrlTask -> {
                         if (task.isSuccessful()) {
                             assert downLoadUrlTask.getResult() != null;
-                            profile.setAvatar(downLoadUrlTask.getResult().toString());
-                            updateUserProfile(profile);
+                            mProfile.setAvatar(downLoadUrlTask.getResult().toString());
+                            updateUserProfile(mProfile);
                         } else {
                             Log.e(TAG, "onViewCreated: Error While downloading the image url: ", downLoadUrlTask.getException());
-                            Toast.makeText(getActivity(), "Error while downloading the image url contact admin", Toast.LENGTH_SHORT).show();
+                            UIHelpers.toast("Error while downloading the image url contact admin");
                         }
                     });
                 } else {
                     Log.e(TAG, "onViewCreated: Error While uploading image: ", task.getException());
-                    Toast.makeText(getActivity(), "Error while uploading the image try again later", Toast.LENGTH_SHORT).show();
+                    UIHelpers.toast("Error while uploading the image try again later");
                 }
             });
 
@@ -173,12 +169,11 @@ public class EditProfileFragment extends Fragment {
 
             updateProfileProgressBar.setVisibility(View.GONE);
             if (task.isSuccessful()) {
-                assert getActivity() != null;
-                Toast.makeText(getActivity(), "User profile successfully updated", Toast.LENGTH_SHORT).show();
-                getActivity().onBackPressed();
+                UIHelpers.toast("User profile successfully updated");
+                requireActivity().onBackPressed();
             } else {
-                Log.e(TAG, "updateUserProfile: Error While uploading the profile details to fire-store: ", task.getException());
-                Toast.makeText(getActivity(), "Error while uploading all the profile details", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "updateUserProfile: ", task.getException());
+                UIHelpers.toast("Error while uploading all the profile details");
             }
         });
     }
@@ -219,7 +214,8 @@ public class EditProfileFragment extends Fragment {
             }
         } else {
             Log.d(TAG, "onActivityResult: failed => result is not OK");
-            Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+
+            UIHelpers.toast("Something went wrong");
         }
     }
 }
