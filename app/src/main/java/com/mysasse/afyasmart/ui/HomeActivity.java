@@ -127,6 +127,26 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        if (mProfile != null) {
+
+            if (!mProfile.getRole().equals("Admin")) {
+
+                menu.removeItem(R.id.admin_dashboard_option);
+            }
+
+            if (mProfile.getRole().equals("Doctor")) {
+
+                menu.removeItem(R.id.doctor_role_request_option);
+
+            }
+        }
+
+        return true;
+    }
+
+    @Override
     public boolean onSupportNavigateUp() {
 
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
@@ -168,6 +188,8 @@ public class HomeActivity extends AppCompatActivity {
 
                     if (documentSnapshot != null) {
                         mProfile = documentSnapshot.toObject(Profile.class);
+
+                        invalidateOptionsMenu();
 
                         //Set the display name
                         assert mProfile != null;
