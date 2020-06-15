@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,6 +39,13 @@ public class AllDiseasesFragment extends Fragment implements AllDiseasesAdapter.
         allDiseasesRecyclerView = view.findViewById(R.id.all_diseases_recycler_view);
         allDiseasesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         allDiseasesRecyclerView.setHasFixedSize(true);
+
+        allDiseasesRecyclerView.addItemDecoration(
+                new DividerItemDecoration(
+                        requireContext(),
+                        LinearLayoutManager.VERTICAL
+                )
+        );
     }
 
     @Override
