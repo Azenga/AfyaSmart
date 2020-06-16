@@ -82,13 +82,9 @@ public class DiseasesFragment extends Fragment implements DiseaseAdapter.Disease
     @Override
     public void onClick(Disease disease) {
 
-        UIHelpers.toast("Getting disease profile");
-
         mDb.collection(Constants.PROFILES_NODE).document(mCurrentUser.getUid())
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
-
-                    UIHelpers.toast("Got the profile");
 
                     String role = documentSnapshot.getString("role");
                     assert role != null;

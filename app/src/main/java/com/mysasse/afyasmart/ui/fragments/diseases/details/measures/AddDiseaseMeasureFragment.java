@@ -10,6 +10,7 @@ import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 
@@ -83,6 +84,10 @@ public class AddDiseaseMeasureFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        if (((AppCompatActivity) requireActivity()).getSupportActionBar() != null) {
+            ((AppCompatActivity) requireActivity()).getSupportActionBar().setSubtitle(mDisease.getName());
+        }
+
         addMeasureButton.setOnClickListener(view -> {
             String body = String.valueOf(bodyField.getText());
 
@@ -132,5 +137,16 @@ public class AddDiseaseMeasureFragment extends Fragment {
         }
 
         return true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+
+        if (((AppCompatActivity) requireActivity()).getSupportActionBar() != null) {
+            ((AppCompatActivity) requireActivity()).getSupportActionBar().setSubtitle(null);
+        }
+
     }
 }

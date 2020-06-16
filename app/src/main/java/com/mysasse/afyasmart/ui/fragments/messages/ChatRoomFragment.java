@@ -1,5 +1,6 @@
 package com.mysasse.afyasmart.ui.fragments.messages;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mysasse.afyasmart.R;
+import com.mysasse.afyasmart.data.Constants;
 import com.mysasse.afyasmart.data.models.Chat;
 
 import java.util.ArrayList;
@@ -36,7 +38,7 @@ public class ChatRoomFragment extends Fragment {
     private String mSender = null;
 
     private FirebaseAuth mAuth;
-    private FirebaseFirestore mDatabase;
+    private FirebaseFirestore mDb;
     private EditText messageEt;
     private RecyclerView chatsRecyclerView;
 
@@ -64,7 +66,7 @@ public class ChatRoomFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         //Init fire-base instances
-        mDatabase = FirebaseFirestore.getInstance();
+        mDb = FirebaseFirestore.getInstance();
 
         //Register the necessary views
         chatsRecyclerView = view.findViewById(R.id.chats_recycler_view);
@@ -96,7 +98,7 @@ public class ChatRoomFragment extends Fragment {
 
     private void pushChat(Map<String, Object> chatMap) {
 
-        mDatabase.collection("chats")
+        mDb.collection("chats")
                 .add(chatMap)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -112,6 +114,23 @@ public class ChatRoomFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        mDb.collection(Constants.PROFILES_NODE)
+                .document(mReceiver)
+                .addSnapshotListener((documentSnapshot, e) -> {
+                    if (e != null) {
+                        Log.e(TAG, "onActivityCreated: ", e);
+                        return;
+                    }
+
+                    if (documentSnapshot != null) {
+                        if (((AppCompatActivity) requireActivity()).getSupportActionBar() != null) {
+                            ((AppCompatActivity) requireActivity()).getSupportActionBar().setSubtitle(documentSnapshot.getString("name"));
+                        }
+                    }
+                });
+
+
         ChatRoomViewModel mViewModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
 
         mViewModel.getChatListData().observe(getViewLifecycleOwner(), chatList -> showChatList(chatList));
@@ -136,4 +155,14 @@ public class ChatRoomFragment extends Fragment {
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+
+
+        if (((AppCompatActivity) requireActivity()).getSupportActionBar() != null) {
+            ((AppCompatActivity) requireActivity()).getSupportActionBar().setSubtitle(null);
+        }
+
+    }
 }

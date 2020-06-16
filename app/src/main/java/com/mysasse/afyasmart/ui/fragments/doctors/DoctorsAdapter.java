@@ -1,5 +1,6 @@
 package com.mysasse.afyasmart.ui.fragments.doctors;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,20 +10,28 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.mysasse.afyasmart.R;
 import com.mysasse.afyasmart.data.models.Profile;
+import com.mysasse.afyasmart.utils.UIHelpers;
 
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.mysasse.afyasmart.data.Constants.DOCTORS_NODE;
+
 public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorViewHolder> {
+    private static final String TAG = "DoctorsAdapter";
 
     private List<Profile> profiles;
+    private FirebaseFirestore mDb;
 
     public DoctorsAdapter(List<Profile> profiles) {
 
+        mDb = FirebaseFirestore.getInstance();
         this.profiles = profiles;
+
     }
 
     @NonNull
@@ -36,8 +45,22 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorVi
         Profile profile = profiles.get(position);
 
         holder.doctorNameTv.setText(profile.getName());
-        holder.doctorExpertiseTv.setText(profile.getExpertise());
 
+        //Get the correct expertise from the doctors model
+        mDb.collection(DOCTORS_NODE).document(profile.getId())
+                .addSnapshotListener((documentSnapshot, e) -> {
+                    if (e != null) {
+                        Log.e(TAG, "onBindViewHolder: ", e);
+                        holder.doctorExpertiseTv.setText("Unknown Expert area");
+                        return;
+                    }
+
+                    if (documentSnapshot != null) {
+                        holder.doctorExpertiseTv.setText(documentSnapshot.getString("areaOfExpertise"));
+                    } else {
+                        holder.doctorExpertiseTv.setText("Unknown Expert area");
+                    }
+                });
 
         Glide.with(holder.doctorAvatarCiv)
                 .load(profile.getAvatar())

@@ -9,21 +9,19 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mysasse.afyasmart.R;
+import com.mysasse.afyasmart.data.Constants;
 import com.mysasse.afyasmart.data.models.Disease;
 import com.mysasse.afyasmart.data.models.DiseaseSymptom;
 import com.mysasse.afyasmart.utils.UIHelpers;
-
-import com.mysasse.afyasmart.data.Constants;
 
 public class AddDiseaseSymptomFragment extends Fragment {
     private static final String TAG = "AddDiseaseSymptomFrag";
@@ -67,6 +65,10 @@ public class AddDiseaseSymptomFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        if (((AppCompatActivity) requireActivity()).getSupportActionBar() != null) {
+            ((AppCompatActivity) requireActivity()).getSupportActionBar().setSubtitle(mDisease.getName());
+        }
 
         addSymptomButton.setOnClickListener(view -> {
             String period = String.valueOf(periodField.getText());
@@ -124,6 +126,17 @@ public class AddDiseaseSymptomFragment extends Fragment {
         }
 
         return true;
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+
+        if (((AppCompatActivity) requireActivity()).getSupportActionBar() != null) {
+            ((AppCompatActivity) requireActivity()).getSupportActionBar().setSubtitle(null);
+        }
 
     }
 }

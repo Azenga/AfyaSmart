@@ -26,7 +26,7 @@ public class AllChatUsersViewModel extends ViewModel implements ProfilesReposito
 
     public LiveData<List<Profile>> getProfiles() {
 
-        profilesRepository.getAllProfiles();
+        profilesRepository.getDoctors();
 
         return _profiles;
     }
