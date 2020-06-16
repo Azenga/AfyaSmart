@@ -174,4 +174,15 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="add_measure_text">Add Measure</string>
+    <string name="add_symptom_text">Add Symptom</string>
+    <string name="period_hint">Period…</string>
+    <string name="period_hint_info">At which stage of the infection do the symptoms show or after how long?</string>
+    <string name="symptom_body_help">Precise verbose description of the symptom</string>
+    <string name="adding_symptom_loading">Adding Symptom…</string>
+    <string name="type_text">Type</string>
+    <string name="curative_text">Curative</string>
+    <string name="preventive_text">Preventive</string>
+    <string name="measure_help">A way to prent or compat the infection that has actually been tested and prove and hs minimal side effects</string>
+    <string name="adding_disease_measure_text">Adding Disease Measure…</string>
 </resources>

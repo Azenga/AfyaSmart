@@ -1,5 +1,6 @@
 package com.mysasse.afyasmart.ui.fragments.diseases;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,13 +18,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.mysasse.afyasmart.R;
+import com.mysasse.afyasmart.data.Constants;
+import com.mysasse.afyasmart.data.models.Disease;
 import com.mysasse.afyasmart.utils.UIHelpers;
 
-public class DiseasesFragment extends Fragment {
+public class DiseasesFragment extends Fragment implements DiseaseAdapter.DiseaseItemListener {
 
     private RecyclerView diseasesRecyclerView;
     private NavController mNavController;
+
+    private FirebaseUser mCurrentUser;
+    private FirebaseFirestore mDb;
 
     private static final String TAG = "DiseasesFragment";
 
@@ -40,19 +49,16 @@ public class DiseasesFragment extends Fragment {
         //Get the NavigationController and assign to a global field
         mNavController = Navigation.findNavController(view);
 
+        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        mDb = FirebaseFirestore.getInstance();
+
         FloatingActionButton addDiseaseFab = view.findViewById(R.id.add_disease_fab);
         addDiseaseFab.setOnClickListener(v -> mNavController.navigate(R.id.addDiseaseFragment));
 
         diseasesRecyclerView = view.findViewById(R.id.diseases_recycler_view);
         diseasesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         diseasesRecyclerView.setHasFixedSize(true);
-
-        diseasesRecyclerView.addItemDecoration(
-                new DividerItemDecoration(
-                        requireContext(),
-                        LinearLayoutManager.VERTICAL
-                )
-        );
+        diseasesRecyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL));
 
     }
 
@@ -62,7 +68,7 @@ public class DiseasesFragment extends Fragment {
         DiseasesViewModel mViewModel = new ViewModelProvider(this).get(DiseasesViewModel.class);
 
         mViewModel.getDiseases().observe(getViewLifecycleOwner(), diseases -> {
-            DiseaseAdapter adapter = new DiseaseAdapter(diseases);
+            DiseaseAdapter adapter = new DiseaseAdapter(diseases, this);
             diseasesRecyclerView.setAdapter(adapter);
         });
 
@@ -73,4 +79,58 @@ public class DiseasesFragment extends Fragment {
     }
 
 
+    @Override
+    public void onClick(Disease disease) {
+
+        UIHelpers.toast("Getting disease profile");
+
+        mDb.collection(Constants.PROFILES_NODE).document(mCurrentUser.getUid())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+
+                    UIHelpers.toast("Got the profile");
+
+                    String role = documentSnapshot.getString("role");
+                    assert role != null;
+
+                    if (role.equalsIgnoreCase("Doctor")) {
+                        CharSequence[] alertItems = {"Browse", "Add Measure", "Add Symptom"};
+
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(requireContext());
+
+                        alertDialog.setItems(alertItems, ((dialog, which) -> {
+                            switch (which) {
+                                case 1:
+                                    DiseasesFragmentDirections.ActionAddDiseaseMeasure action1 =
+                                            DiseasesFragmentDirections.actionAddDiseaseMeasure(disease);
+                                    mNavController.navigate(action1);
+                                    break;
+                                case 2:
+                                    DiseasesFragmentDirections.ActionAddDiseaseSymptom action2 =
+                                            DiseasesFragmentDirections.actionAddDiseaseSymptom(disease);
+                                    mNavController.navigate(action2);
+                                    break;
+                                default:
+                                    navToReadDisease(disease);
+                            }
+                        }));
+
+                        alertDialog.show();
+
+                    } else {
+                        navToReadDisease(disease);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "getting profile", e);
+                    UIHelpers.toast("Can't assert whether you are a doctor");
+                    navToReadDisease(disease);
+                });
+
+    }
+
+    private void navToReadDisease(Disease disease) {
+        DiseasesFragmentDirections.ActionViewDiseaseDetails action = DiseasesFragmentDirections.actionViewDiseaseDetails(disease);
+        mNavController.navigate(action);
+    }
 }

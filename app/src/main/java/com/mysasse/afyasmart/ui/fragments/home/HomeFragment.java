@@ -11,17 +11,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mysasse.afyasmart.R;
+import com.mysasse.afyasmart.data.models.Disease;
 import com.mysasse.afyasmart.ui.fragments.diseases.DiseaseAdapter;
 import com.mysasse.afyasmart.utils.UIHelpers;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements DiseaseAdapter.DiseaseItemListener {
 
     private RecyclerView diseasesRecyclerView;
+    private NavController mNavController;
 
     private static final String TAG = "HomeFragment";
 
@@ -35,6 +39,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mNavController = Navigation.findNavController(view);
 
         diseasesRecyclerView = view.findViewById(R.id.diseases_recycler_view);
         diseasesRecyclerView.setHasFixedSize(true);
@@ -56,7 +62,7 @@ public class HomeFragment extends Fragment {
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         homeViewModel.getDiseases().observe(getViewLifecycleOwner(), diseases -> {
-            DiseaseAdapter adapter = new DiseaseAdapter(diseases);
+            DiseaseAdapter adapter = new DiseaseAdapter(diseases, this);
             diseasesRecyclerView.setAdapter(adapter);
         });
 
@@ -65,5 +71,13 @@ public class HomeFragment extends Fragment {
             Log.e(TAG, "onActivityCreated: getting diseases", exception);
             UIHelpers.toast(exception.getLocalizedMessage());
         });
+    }
+
+    @Override
+    public void onClick(Disease disease) {
+
+        HomeFragmentDirections.ActionReadDisease action = HomeFragmentDirections.actionReadDisease(disease);
+        mNavController.navigate(action);
+
     }
 }

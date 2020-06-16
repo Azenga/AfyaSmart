@@ -20,6 +20,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.mysasse.afyasmart.R;
 import com.mysasse.afyasmart.data.models.Disease;
 
+import static com.mysasse.afyasmart.data.Constants.DISEASES_NODE;
+
 public class AddDiseaseFragment extends Fragment {
     private static final String TAG = "AddDiseaseFragment";
 
@@ -57,7 +59,7 @@ public class AddDiseaseFragment extends Fragment {
             if (hasInvalidInputs(name, description)) return;
 
             addDiseaseGroup.setVisibility(View.VISIBLE);
-            mDatabase.collection("diseases").add(new Disease(name, description)).addOnCompleteListener(
+            mDatabase.collection(DISEASES_NODE).add(new Disease(name, description)).addOnCompleteListener(
                     task -> {
                         addDiseaseGroup.setVisibility(View.GONE);
 
