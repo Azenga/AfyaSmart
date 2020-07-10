@@ -35,6 +35,7 @@ public class DiseasesFragment extends Fragment implements DiseaseAdapter.Disease
     private FirebaseFirestore mDb;
 
     private static final String TAG = "DiseasesFragment";
+    private String role;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -59,6 +60,19 @@ public class DiseasesFragment extends Fragment implements DiseaseAdapter.Disease
         diseasesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         diseasesRecyclerView.setHasFixedSize(true);
         diseasesRecyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL));
+
+        mDb.collection(Constants.PROFILES_NODE).document(mCurrentUser.getUid())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+
+                    role = documentSnapshot.getString("role");
+
+                    assert role != null;
+
+                    if (role.equalsIgnoreCase("Doctor"))
+                        addDiseaseFab.setVisibility(View.VISIBLE);
+                })
+                .addOnFailureListener(e -> Log.e(TAG, "getting profile", e));
 
     }
 
@@ -114,7 +128,9 @@ public class DiseasesFragment extends Fragment implements DiseaseAdapter.Disease
                         alertDialog.show();
 
                     } else {
+
                         navToReadDisease(disease);
+
                     }
                 })
                 .addOnFailureListener(e -> {
