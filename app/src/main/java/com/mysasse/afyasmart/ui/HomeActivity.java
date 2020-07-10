@@ -64,7 +64,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //Setup the AppBarConfigurations
         mAppBarConfiguration = new AppBarConfiguration
-                .Builder(R.id.homeFragment, R.id.doctorsFragment, R.id.diseasesFragment, R.id.messagesFragment, R.id.postsFragment, R.id.profileFragment)
+                .Builder(R.id.homeFragment, R.id.doctorsFragment, R.id.diseasesFragment, R.id.messagesFragment, R.id.profileFragment)
                 .setOpenableLayout(drawerLayout)
                 .build();
 

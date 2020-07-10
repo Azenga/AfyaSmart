@@ -22,11 +22,6 @@
             android:icon="@drawable/ic_chat_bubble"
             android:orderInCategory="104"
             android:title="@string/messages_text" />
-        <item
-            android:id="@+id/postsFragment"
-            android:icon="@drawable/ic_forum"
-            android:orderInCategory="105"
-            android:title="@string/blog_text" />
     </group>
 
     <item
