@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Smart Health Application</string>
+    <string name="app_name">AfyaSmart</string>
     <string name="home_activity_text">Home Activity</string>
     <string name="password_text">Password</string>
     <string name="login_text">Login</string>
@@ -34,7 +34,6 @@
     <string name="profile_text">Profile</string>
     <string name="accounts_text">Accounts</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="account_circle_drawable_text">Account Circle Drawable</string>
     <string name="contact_hint">Contact…</string>
